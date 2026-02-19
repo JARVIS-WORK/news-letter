@@ -234,6 +234,20 @@
     gap: 12px;
   }
 
+  .latest-row {
+    border-color: #1a3a2a;
+    background: #0d1f17;
+  }
+
+  .latest-row:hover {
+    border-color: var(--green) !important;
+    background: #0d1f17 !important;
+  }
+
+  .latest-row .issue-num {
+    font-weight: 700;
+  }
+
   .issue-row {
     display: flex;
     align-items: center;
@@ -297,6 +311,135 @@
     font-size: 20px;
     margin-bottom: 10px;
     display: block;
+  }
+
+  /* Slider */
+  .slider-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
+  .slider {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .slide {
+    min-width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 32px;
+    box-sizing: border-box;
+  }
+
+  .slide-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--green);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .slide-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #444;
+    margin-bottom: 8px;
+  }
+
+  .slide-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .slide-preview {
+    font-size: 15px;
+    line-height: 1.8;
+    color: #777;
+    margin-bottom: 24px;
+    border-left: 2px solid var(--border);
+    padding-left: 16px;
+  }
+
+  .slide-cmd {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #aaa;
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+  }
+
+  .slide-cmd .prompt { color: var(--green); }
+
+  .copy-btn-sm {
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: #555;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .copy-btn-sm:hover { border-color: var(--green); color: var(--green); }
+  .copy-btn-sm.copied { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+
+  .slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #333;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .dot.active { background: var(--green); width: 20px; border-radius: 3px; }
+
+  .arrow {
+    position: absolute;
+    top: 42%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: #666;
+    font-size: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .arrow:hover { border-color: var(--green); color: var(--green); }
+  .arrow.left { left: -18px; }
+  .arrow.right { right: -18px; }
+
+  @media (max-width: 600px) {
+    .arrow.left { left: 6px; }
+    .arrow.right { right: 6px; }
   }
 
   /* Footer quote */
@@ -368,7 +511,7 @@
   <div class="header">
     <div class="signal">
       <div class="signal-dot"></div>
-     · terminal
+       terminal-paper-
     </div>
     <h1>Terminal<br><span>Newsletter</span><span class="cursor"></span></h1>
     <p class="tagline">Daily learnings. No inbox. No noise.<br>Just one command — and something worth knowing.</p>
@@ -400,16 +543,24 @@
   <div class="section">
     <div class="section-title">all issues</div>
     <div class="issues">
-      <a class="issue-row" href="https://jarvis-work.github.io/news-letter/latest.txt">
-        <span class="issue-num">latest</span>
+
+      <!-- LATEST — always stays at top, never change this -->
+      <a class="issue-row latest-row" href="https://jarvis-work.github.io/news-letter/latest.txt">
+        <span class="issue-num">⚡ latest</span>
         <span class="issue-title">curl .../latest.txt</span>
         <span class="issue-date">always fresh</span>
       </a>
-      <a class="issue-row" href="https://jarvis-work.github.io/news-letter/issue-1.txt">
+
+      <!-- ADD NEW ISSUES AT THE TOP — just copy one block and change the number, title and date -->
+
+      <a class="issue-row" href="https://jarvis-work.github.io/news-letter/1st-issue.txt">
         <span class="issue-num">issue 01</span>
-        <span class="issue-title">curl .../issue-1.txt</span>
-        <span class="issue-date">feb 2026</span>
+        <span class="issue-title">My First Learning</span>
+        <span class="issue-date">19 Feb 2026 · 6:54 PM</span>
       </a>
+
+      <!-- COPY THE BLOCK ABOVE AND PASTE FOR EVERY NEW ISSUE -->
+
     </div>
   </div>
 
@@ -436,12 +587,60 @@
     </div>
   </div>
 
+  <!-- Slider — Latest 2 Previews -->
+  <div class="section">
+    <div class="section-title">peek inside</div>
+    <div class="slider-wrapper">
+      <div class="slider" id="slider">
+
+        <!-- SLIDE 1 — always your LATEST issue preview -->
+        <div class="slide">
+          <div class="slide-tag">⚡ latest issue</div>
+          <div class="slide-num">Issue 01 · 19 Feb 2026</div>
+          <div class="slide-title">My First Learning</div>
+          <div class="slide-preview">
+           starter....
+          </div>
+          <div class="slide-cmd">
+            <span class="prompt">$</span> curl .../latest.txt
+            <button class="copy-btn-sm" onclick="copySlide(this, 'curl https://jarvis-work.github.io/news-letter/latest.txt')">copy</button>
+          </div>
+        </div>
+
+        <!-- SLIDE 2 — always your SECOND LAST issue preview -->
+        <div class="slide">
+          <div class="slide-tag">📁 previous issue</div>
+          <div class="slide-num">Issue 01 · coming soon</div>
+          <div class="slide-title">Previous Learning</div>
+          <div class="slide-preview">
+            just staritng ....
+          </div>
+          <div class="slide-cmd">
+            <span class="prompt">$</span> curl .../issue-1.txt
+            <button class="copy-btn-sm" onclick="copySlide(this, 'curl https://jarvis-work.github.io/news-letter/issue-1.txt')">copy</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Dots -->
+      <div class="slider-dots">
+        <span class="dot active" onclick="goTo(0)"></span>
+        <span class="dot" onclick="goTo(1)"></span>
+      </div>
+
+      <!-- Arrows -->
+      <button class="arrow left" onclick="goTo(current - 1)">←</button>
+      <button class="arrow right" onclick="goTo(current + 1)">→</button>
+    </div>
+  </div>
+
   <!-- Quote -->
   <div class="quote">
     <p>
       <strong>"If I figured it out</strong> —<br>
       someone else is struggling with it right now.<br>
-      Maybe this saves them the trouble."
+      Maybe this<br><strong> saves them the trouble</strong>."
     </p>
   </div>
 
@@ -456,11 +655,29 @@
     navigator.clipboard.writeText('curl https://jarvis-work.github.io/news-letter/latest.txt');
     btn.textContent = 'copied!';
     btn.classList.add('copied');
-    setTimeout(() => {
-      btn.textContent = 'copy';
-      btn.classList.remove('copied');
-    }, 2000);
+    setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 2000);
   }
+
+  // Slider
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+
+  function goTo(n) {
+    current = (n + slides.length) % slides.length;
+    document.getElementById('slider').style.transform = `translateX(-${current * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function copySlide(btn, cmd) {
+    navigator.clipboard.writeText(cmd);
+    btn.textContent = 'copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'copy'; btn.classList.remove('copied'); }, 2000);
+  }
+
+  // Auto slide every 5 seconds
+  setInterval(() => goTo(current + 1), 5000);
 </script>
 </body>
 </html>

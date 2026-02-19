@@ -7,7 +7,7 @@ Daily learnings. No inbox. Just your terminal.
 
 Every day I learn something new.
  I share it with you.
-No ads. No signup. No noise. Just real learnings, daily. 
+----No ads. No signup. No noise. Just real learnings, daily. ---
 
 All issues:
 -> curl https://jarvis-work.github.io/news-letter/issue-1.txt

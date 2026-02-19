@@ -9,8 +9,8 @@ Every day I learn something new.
  I share it with you.
 ----No ads. No signup. No noise. Just real learnings, daily. ---
 
-All issues:
--> curl https://jarvis-work.github.io/news-letter/issue-1.txt
+ my first issue:
+-> curl https://jarvis-work.github.io/news-letter/1st-issue.txt
 
 
 "If I figured it out — maybe this saves you the struggle."
